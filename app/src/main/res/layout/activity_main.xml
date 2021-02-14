@@ -10,6 +10,7 @@
     android:background="@drawable/baseball_background">
 
     <ScrollView
+        android:id="@+id/scroll_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="60"
@@ -17,9 +18,10 @@
         android:background="@drawable/baseball_ground">
 
         <TextView
+            android:id="@+id/result"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text=" 1. [ 1 2 3 ] - S : 1 B : 1"
+            android:text=""
             android:textColor="#000000"
             android:textSize="25sp"
             android:textStyle="bold"
@@ -37,40 +39,60 @@
         android:gravity="center">
 
         <TextView
+            android:id="@+id/input_text_0"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="30"
             android:background="@drawable/baseball_ball"
-            android:text="1"
+            android:text=""
             android:textSize="70dp"
             android:textStyle="italic"
             android:gravity="center"
             android:textColor="#000000"
-            android:layout_margin="5dp"/>
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"/>
 
         <TextView
+            android:id="@+id/input_text_1"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="30"
             android:background="@drawable/baseball_ball"
-            android:text="1"
+            android:text=""
             android:textSize="70dp"
             android:textStyle="italic"
             android:gravity="center"
             android:textColor="#000000"
-            android:layout_margin="5dp"/>
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"/>
 
         <TextView
+            android:id="@+id/input_text_2"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="30"
             android:background="@drawable/baseball_ball"
-            android:text="1"
+            android:text=""
             android:textSize="70dp"
             android:textStyle="italic"
             android:gravity="center"
             android:textColor="#000000"
-            android:layout_margin="5dp"/>
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:layout_margin="5dp"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#787878" />
+
     </LinearLayout>
 
     <LinearLayout
@@ -90,7 +112,7 @@
             android:background="@drawable/num_button_select"
             android:textColor="#ffffff"
             android:textStyle="bold"
-            android:textSize="35sp"/>
+            android:textSize="35sp" />
         <Button
             android:id="@+id/num_button_2"
             android:layout_width="0dp"
@@ -203,6 +225,7 @@
             android:textStyle="bold"
             android:textSize="35sp"/>
         <ImageButton
+            android:id="@+id/hit_button"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -210,7 +233,8 @@
             android:textColor="#ffffff"
             android:textStyle="bold"
             android:textSize="35sp"
-            android:src=""/>
+            android:src="@drawable/baseball_hit"
+            android:scaleType="centerInside"/>
 
     </LinearLayout>
 
