@@ -18,7 +18,7 @@
         android:background="@drawable/baseball_ground">
 
         <TextView
-            android:id="@+id/result"
+            android:id="@+id/resultTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text=""
