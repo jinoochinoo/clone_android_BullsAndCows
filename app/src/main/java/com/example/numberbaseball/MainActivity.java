@@ -61,17 +61,7 @@ public class MainActivity extends AppCompatActivity {
             getButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(inputCount < 3){
-                        Button button = findViewById(v.getId());
-                        inputArray[inputCount].setText(button.getText().toString());
-                        button.setEnabled(false);
-                        inputCount++;
-                        
-                        // SoundPool 세팅
-                        soundPool.play(buttonSound[2], 1, 1, 1, 0, 1);
-                    } else{
-                        Toast.makeText(getApplicationContext(), "hit 버튼을 클릭하세요", Toast.LENGTH_SHORT).show();
-                    }
+                    numButtonClick(v);
                 }
             });
         }
@@ -79,18 +69,7 @@ public class MainActivity extends AppCompatActivity {
         backSpaceBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                if (inputCount > 0) {
-                    // 버튼 enable 상태로 되돌리기
-                    int buttonRefresh = Integer.parseInt(inputArray[inputCount -1].getText().toString());
-                    buttonArray[buttonRefresh].setEnabled(true);
-                    // 입력된 값 삭제
-                    inputArray[inputCount - 1].setText("");
-                    inputCount--;
-                    // SoundPool 세팅
-                    soundPool.play(buttonSound[3], 1, 1, 1, 0, 1);
-                } else{
-                    Toast.makeText(getApplicationContext(), "숫자를 입력해주세요.", Toast.LENGTH_SHORT).show();
-                }
+                backSpaceClick();
             }
         });
 
@@ -108,23 +87,14 @@ public class MainActivity extends AppCompatActivity {
                     countCheck = getCountCheck(targetNumbers, userNumbers);
                     Log.e("hitButton", "countCheck ---- S : " + countCheck[0] + " B : " + countCheck[1]);
 
-                    String resultText = "";
-                    // 아웃
-                    if(countCheck[0] == 3){
-                        resultText = "1 [" + userNumbers[0] + " " + userNumbers[1] + " " +
-                                userNumbers[2] + " ]  아웃! 게임 끝! ";
+                    String resultText = getCountString(userNumbers, countCheck);
 
-                        // SoundPool 세팅
-                        soundPool.play(buttonSound[0], 1, 1, 1, 0, 1);
-                    } else {
-                        resultText = "1 [" + userNumbers[0] + " " + userNumbers[1] + " " +
-                                userNumbers[2] + " ]  S : " + countCheck[0] + " / B : "
-                                + countCheck[1];
-                    } if(hitCount == 1){
-                            resultTextView.setText(resultText + "\n");
-                        } else{
-                            resultTextView.append(resultText + "\n");
-                        }
+                    if(hitCount == 1){
+                        resultTextView.setText(resultText);
+                    } else{
+                        resultTextView.append(resultText);
+                    }
+                    resultTextView.append("\n");
 
                     if(countCheck[0] == 3){
                         hitCount = 1;
@@ -149,16 +119,63 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    private String getCountString(int[] userNumbers, int[] countCheck) {
+        String resultText;// 아웃
+        if(countCheck[0] == 3){
+            resultText = hitCount + " [" + userNumbers[0] + " " + userNumbers[1] + " " +
+                    userNumbers[2] + " ]  아웃! 게임 끝! ";
+
+            // SoundPool 세팅
+            soundPool.play(buttonSound[0], 1, 1, 1, 0, 1);
+        } else {
+            resultText = hitCount + " [" + userNumbers[0] + " " + userNumbers[1] + " " +
+                    userNumbers[2] + " ]  S : " + countCheck[0] + " / B : "
+                    + countCheck[1];
+        }
+        return resultText;
+    }
+
+    private void backSpaceClick() {
+        if (inputCount > 0) {
+            // 버튼 enable 상태로 되돌리기
+            int buttonRefresh = Integer.parseInt(inputArray[inputCount -1].getText().toString());
+            buttonArray[buttonRefresh].setEnabled(true);
+            // 입력된 값 삭제
+            inputArray[inputCount - 1].setText("");
+            inputCount--;
+            // SoundPool 세팅
+            soundPool.play(buttonSound[3], 1, 1, 1, 0, 1);
+        } else{
+            Toast.makeText(getApplicationContext(), "숫자를 입력해주세요.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void numButtonClick(View v) {
+        if(inputCount < 3){
+            Button button = findViewById(v.getId());
+            inputArray[inputCount].setText(button.getText().toString());
+            button.setEnabled(false);
+            inputCount++;
+
+            // SoundPool 세팅
+            soundPool.play(buttonSound[2], 1, 1, 1, 0, 1);
+        } else{
+            Toast.makeText(getApplicationContext(), "hit 버튼을 클릭하세요", Toast.LENGTH_SHORT).show();
+        }
+    }
+
     private int[] getCountCheck(int[] targetNumbers, int[] userNumbers) {
         int[] setCount = new int[2];
         for (int i = 0; i < targetNumbers.length; i++) {
             for (int j = 0; j < userNumbers.length; j++) {
-                // 스트라이크
-                if(targetNumbers[i] == userNumbers[j] && i == j){
-                    setCount[0]++;
-                    // 볼
-                } else if(targetNumbers[i] == userNumbers[j] && i != j){
-                    setCount[1]++;
+
+                if(targetNumbers[i] == userNumbers[j]){
+                    // 스트라이크
+                    if(i == j){
+                        setCount[0]++;
+                    } else{ // 볼
+                        setCount[1]++;
+                    }
                 }
             }
         }
